@@ -294,7 +294,7 @@ namespace Bricelam.EntityFrameworkCore.Design
             { "sinus", "sinus" },
             { "coitus", "coitus" },
             { "plexus", "plexus" },
-            { "status", "status" },
+            { "status", "statuses" },
             { "hiatus", "hiatus" },
             { "afreet", "afreeti" },
             { "afrit", "afriti" },
@@ -502,8 +502,8 @@ namespace Bricelam.EntityFrameworkCore.Design
                 return prefixWord + suffixWord;
 
             // handle irregular plurals, e.g. "ox" -> "oxen"
-            if (_irregularPluralsList.TryGetValue(suffixWord, out var plural))
-                return prefixWord + plural;
+            if (_irregularPluralsList.TryGetValue(suffixWord?.ToLowerInvariant(), out var plural))
+                return prefixWord + Capitalize(suffixWord, (_) => plural);
 
             // handle irregular inflections for common suffixes, e.g. "mouse" -> "mice"
             if (TryInflectOnSuffixInWord(
@@ -892,12 +892,31 @@ namespace Bricelam.EntityFrameworkCore.Design
         // separate one combine word in to two parts, prefix word and the last word(suffix word)
         static string GetSuffixWord(string word, out string prefixWord)
         {
-            // use the last space to separate the words
-            var lastSpaceIndex = word.LastIndexOf(' ');
-            prefixWord = word.Substring(0, lastSpaceIndex + 1);
+            if (word.Contains(' '))
+            {
+                // use the last space to separate the words
+                var lastSpaceIndex = word.LastIndexOf(' ');
+                prefixWord = word.Substring(0, lastSpaceIndex + 1);
 
-            // CONSIDER(leil): use capital letters to separate the words
-            return word.Substring(lastSpaceIndex + 1);
+                return word.Substring(lastSpaceIndex + 1);
+            }
+            else
+            {
+                // use the last capital to separate the words
+                var lastCapitalIndex = word.LastIndexOfAny(new[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' });
+                if (lastCapitalIndex == -1)
+                {
+                    prefixWord = "";
+
+                    return word;
+                }
+                else
+                {
+                    prefixWord = word.Substring(0, lastCapitalIndex);
+
+                    return word.Substring(lastCapitalIndex);
+                }
+            }
         }
 
         static bool IsCapitalized(string word)

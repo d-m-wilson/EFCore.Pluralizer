@@ -9,13 +9,13 @@ database.
 
 ### Console:
 ``` sh
-dotnet add package Bricelam.EntityFrameworkCore.Pluralizer
+dotnet add package info.dmwilson.EntityFrameworkCore.Pluralizer
 dotnet ef dbcontext scaffold "Data Source=chinook.db" Microsoft.EntityFrameworkCore.Sqlite
 ```
 
 ### PMC:
 ``` psm1
-Install-Package Bricelam.EntityFrameworkCore.Pluralizer
+Install-Package info.dmwilson.EntityFrameworkCore.Pluralizer
 Scaffold-DbContext 'Data Source=chinook.db' Microsoft.EntityFrameworkCore.Sqlite
 ```
 

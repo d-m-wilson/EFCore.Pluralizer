@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>Bricelam.EntityFrameworkCore.Pluralizer</AssemblyName>
     <RootNamespace>Bricelam.EntityFrameworkCore.Design</RootNamespace>
-    <Authors>Brice Lambson</Authors>
+    <Authors>Brice Lambson, David M. Wilson</Authors>
     <Description>Adds design-time pluralization to EF Core</Description>
-    <PackageLicenseUrl>https://github.com/bricelam/EFCore.Pluralizer/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/bricelam/EFCore.Pluralizer</PackageProjectUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/d-m-wilson/EFCore.Pluralizer</PackageProjectUrl>
     <PackageTags>EFCore</PackageTags>
-    <RepositoryUrl>https://github.com/bricelam/EFCore.Pluralizer.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/d-m-wilson/EFCore.Pluralizer.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Copyright>© 2018 Brice Lambson. All rights reserved.</Copyright>
     <SignAssembly>true</SignAssembly>
@@ -21,8 +21,11 @@
     <WindowsSdkDir Condition=" '$(WindowsSdkDir)' == '' ">$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0@InstallationFolder)</WindowsSdkDir>
     <WindowsSDKVersion Condition=" '$(WindowsSDKVersion)' == '' ">$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0@ProductVersion)\</WindowsSDKVersion>
     <SignToolCommand>"$(WindowsSdkDir)bin\$(WindowsSDKVersion)x86\signtool.exe" sign /t $(TimestampUrl) /q</SignToolCommand>
-    <Version>1.0.0</Version>
+    <Version>1.0.1-alpha1</Version>
     <DevelopmentDependency>true</DevelopmentDependency>
+    <OutputType>Library</OutputType>
+    <PackageId>info.dmwilson.EntityFrameworkCore.Pluralizer</PackageId>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
+    </PackageReference>
   </ItemGroup>
 
   <Target Name="SignOutput" AfterTargets="Build" Condition="'$(SignOutput)' == 'True'">
